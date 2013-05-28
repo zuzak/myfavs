@@ -4,7 +4,8 @@ var express = require("express"),
     dgram = require;
     app = express(),
     read = require("fs").readFileSync,
-    strings = {};
+    write = require("fs").writeFileSync,
+    exists = require("fs").existsSync;
 
 app.set("views",__dirname + "/views");
 app.set("view engine","jade");
@@ -12,6 +13,13 @@ app.use(express.static(__dirname+"/public"));
 
 app.listen(config.port);
 console.log("Listening on " + config.port);
+
+if(exists('favourites_db.json')) {
+    strings = JSON.parse(read('favourites_db.json', 'utf-8'));
+}
+else {
+    strings = {};
+}
 
 app.get("/", function(req, res){
     res.render("index");
@@ -38,7 +46,7 @@ app.get("/api/favourites/:lookup", function(req, res){
     var data = {};
     if(_.has(favs,req.params.lookup)){
         data = {headword:req.params.lookup,entry:favs[req.params.lookup],count:_.size(favs)};
-        if(strings[req.params.lookup]){
+        if(_.has(strings, req.params.lookup)){
             strings[req.params.lookup] += 1;
             console.log(" *  " + req.params.lookup);
         } else {
@@ -47,6 +55,7 @@ app.get("/api/favourites/:lookup", function(req, res){
             data["newentry"] = true;
         }
         data["global"] = _.size(strings);
+        write("favourites_db.json", JSON.stringify(strings, null, '    '));
     } else {
         console.log("    "+ req.params.lookup);
     }
