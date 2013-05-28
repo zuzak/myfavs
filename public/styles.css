@@ -1,0 +1,70 @@
+@import url(http://fonts.googleapis.com/css?family=Archivo+Black);
+body {
+    color:#bbb;
+    background-color:#333;
+    font-family:'Archivo Black',sans-serif;
+    margin:2%;
+}
+#favs {
+    clear:both;
+    font-size:400%;
+    height:4em;
+}
+h1 {
+    font-size:400%;
+    margin-bottom:5%;
+}
+#favbox {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    background-color:transparent;
+    border-bottom:1px solid #bbb;
+    color:white;
+    font:inherit;
+    width:50%;
+    text-transform:lowercase;
+    outline:none;
+}
+#favspace {
+    color:white;
+}
+#is {
+    display:inline-block;
+}
+#history {
+    color:#555;
+    float:right;
+    display:inline-block;
+    font-size:100%;
+}
+#response {
+    display:none;
+}
+#favbox::-moz-selection{
+    color:#ccc;
+    background:#444;
+}
+#favbox::selection {
+    color:#ccc;
+    background:#444;
+}
+#verbosehistory {
+    color:#555;
+    font-size:60%;
+}
+#verbosehistory a, #verbosehistory span {
+    padding:5px;
+    display:inline-block;
+    float:left;
+}
+a{
+    text-decoration:inherit;
+}
+a:hover {
+    color:white;
+    background-color:black;
+}
+a:visited{
+    color:inherit;
+}

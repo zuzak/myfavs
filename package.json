@@ -1,0 +1,18 @@
+{
+    "name": "myfavs",
+    "private": "true",
+    "version": "2.0.1",
+    "dependencies": {
+        "express": "3.2.4",
+        "jade": "0.30.0",
+        "underscore": "*"
+    },
+    "config": {
+        "port": "8081"
+    },
+    "author": {
+        "name": "Douglas Gardner",
+        "email": "douglas@chippy.ch"
+    },
+    "license": "proprietary"
+}

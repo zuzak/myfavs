@@ -1,0 +1,7 @@
+extends skeleton
+block content
+  h1 Favourites 
+  div#verbosehistory
+    each val,key in history
+      span.hist(class="hist#{val}")  #{key}
+    span.hist + #{leftover} others
