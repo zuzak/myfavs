@@ -14,8 +14,8 @@ app.use(express.static(__dirname+"/public"));
 app.listen(config.port);
 console.log("Listening on " + config.port);
 
-if(exists('favourites_db.json')) {
-    strings = JSON.parse(read('favourites_db.json', 'utf-8'));
+if(exists('./favourites_db.json')) {
+    strings = JSON.parse(read('./favourites_db.json', 'utf-8'));
 }
 else {
     strings = {};
@@ -55,7 +55,7 @@ app.get("/api/favourites/:lookup", function(req, res){
             data["newentry"] = true;
         }
         data["global"] = _.size(strings);
-        write("favourites_db.json", JSON.stringify(strings, null, '    '));
+        write("./favourites_db.json", JSON.stringify(strings, null, '    '));
     } else {
         console.log("    "+ req.params.lookup);
     }
