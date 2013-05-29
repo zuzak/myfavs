@@ -1,5 +1,10 @@
 extends skeleton
 block content
+  ul#links
+    li
+      a(href="history") history
+    li
+      a(href="progress") progress
   a#history(href="#") type a word into the textbox ('apple')
   div#favs
     span My favourite 
@@ -9,3 +14,6 @@ block content
       span#favspace ...
       span#period &#46;
   div#verbosehistory
+    span Click the progress bar to toggle between local (slash) and global (colon) progress
+    span See ./history and ./progress for information that might help you on your quest
+  div#warning

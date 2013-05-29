@@ -57,6 +57,11 @@ function getFavs(){
             } else {
                 // sit tight
             }
+            if(data.warning){
+                $("#warning").html(data.warning);
+            } else {
+                $("#warning").html();
+            }
         });
     });
 }

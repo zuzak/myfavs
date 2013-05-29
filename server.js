@@ -27,19 +27,36 @@ app.get("/", function(req, res){
 app.get("/api/favourites", function(req,res){
     res.render("json",{data:{}});
 });
+app.get("/progress", function(req, res){
+    try{
+        var favs = JSON.parse(read("./favourites.json","utf8"));
+    } catch(e){
+        // lol
+    }
+    var history = [];
+    _.each(favs, function(val,key){
+        if(strings[key]){
+            history.push(strings[key]);
+        } else {
+            history.push(null);
+        }
+    });
+    res.render("progress",{history:history});
+});
 app.get("/history", function(req, res){
     try{
         var favs = JSON.parse(read("./favourites.json","utf8"));
     }catch(e){
         // foo
     }
-    var leftover =  _.size(favs)-_.size(strings);
-    res.render("history",{history:strings,leftover:leftover});
+    var leftover =  _.keys(favs).length-_.keys(strings).length;
+    res.render("history",{history:_.keys(strings),leftover:leftover});
 });
 
 app.get("/api/favourites/:lookup", function(req, res){
     try{
     var favs = JSON.parse(read("./favourites.json","utf8"));
+    var warning = read("./warning.txt","utf8");
     } catch(e){
         // do nothing
     }
@@ -54,10 +71,11 @@ app.get("/api/favourites/:lookup", function(req, res){
             console.log("*** " + req.params.lookup);
             data["newentry"] = true;
         }
-        data["global"] = _.size(strings);
+        data["global"] = _.keys(strings).length;
         write("favourites_db.json", JSON.stringify(strings, null, '    '));
     } else {
         console.log("    "+ req.params.lookup);
     }
+    if(warning){data["warning"] = warning;}
     res.render("json",{data:data});
 });

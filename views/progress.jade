@@ -1,0 +1,16 @@
+extends skeleton
+block content
+  h1 Progress 
+  div#progcontainer
+    div#topleft A
+    div#verboseprogress
+      each val in history
+        span.progress(class=val) #{val}
+    div#bottomright Z
+  div#verbosehistory
+    span.
+      This box displays the favourites in alphabetical order, starting from the
+      top left corner, progressing along each row, until reaching the last guess
+      in the bottom right hand corner of the box. The number of times each word
+      has been guessed is shown in each cell. Dark grey boxes do not represent
+      words.

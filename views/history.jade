@@ -2,6 +2,7 @@ extends skeleton
 block content
   h1 Favourites 
   div#verbosehistory
+    #{history.apple}
     each val,key in history
-      span.hist(class="hist#{val}")  #{key}
+      span.hist(class="hist#{val}")  #{val}
     span.hist + #{leftover} others
