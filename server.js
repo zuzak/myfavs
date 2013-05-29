@@ -71,7 +71,6 @@ app.get("/api/favourites/:lookup", function(req, res){
             console.log("*** " + req.params.lookup);
             data["newentry"] = true;
         }
-<<<<<<< HEAD
         data["global"] = _.keys(strings).length;
         write("./favourites_db.json", JSON.stringify(strings, null, '    '));
     } else {
