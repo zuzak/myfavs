@@ -3,9 +3,11 @@ var express = require("express"),
     _ = require("underscore"),
     dgram = require;
     app = express(),
+    fs = require("fs"),
     read = require("fs").readFileSync,
     write = require("fs").writeFileSync,
-    exists = require("fs").existsSync;
+    exists = require("fs").existsSync,
+    append = require("fs").appendFile;
 
 app.set("views",__dirname + "/views");
 app.set("view engine","jade");
@@ -13,6 +15,7 @@ app.use(express.static(__dirname+"/public"));
 
 app.listen(config.port);
 console.log("Listening on " + config.port);
+append("log.txt","XXX Listening on port " + config.port+"\n");
 
 if(exists('./favourites_db.json')) {
     strings = JSON.parse(read('./favourites_db.json', 'utf-8'));
@@ -43,6 +46,24 @@ app.get("/progress", function(req, res){
     });
     res.render("progress",{history:history});
 });
+app.get("/securitythroughobscurity", function(req,res){
+    try{
+        var favs = JSON.parse(read("./favourites.json","utf8"));
+    } catch(e){
+        // lol
+    }
+    var history = [];
+    _.each(favs, function(val,key){
+        var success;
+        if(strings[key]){
+            success = true;
+        } else {
+            success = false;
+        }
+        history.push({"headword": key, "success": success, "count": strings[key]});
+    });
+    res.render("overview",{data:history});
+});
 app.get("/history", function(req, res){
     try{
         var favs = JSON.parse(read("./favourites.json","utf8"));
@@ -60,22 +81,25 @@ app.get("/api/favourites/:lookup", function(req, res){
     } catch(e){
         // do nothing
     }
-    var data = {};
+    var data = {}, flag;
     if(_.has(favs,req.params.lookup)){
         data = {headword:req.params.lookup,entry:favs[req.params.lookup],count:_.size(favs)};
         if(_.has(strings, req.params.lookup)){
             strings[req.params.lookup] += 1;
-            console.log(" *  " + req.params.lookup);
+            flag = " * ";
         } else {
             strings[req.params.lookup] = 1;
-            console.log("*** " + req.params.lookup);
+            flag = "***";
             data["newentry"] = true;
         }
         data["global"] = _.keys(strings).length;
         write("./favourites_db.json", JSON.stringify(strings, null, '    '));
     } else {
-        console.log("    "+ req.params.lookup);
+        flag = "   ";
     }
     if(warning){data["warning"] = warning;}
+    append("log.txt",flag + " " + req.params.lookup+"\n");
+    console.log(flag + " " + req.params.lookup);
     res.render("json",{data:data});
 });
+

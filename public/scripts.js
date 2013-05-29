@@ -1,4 +1,4 @@
-var mode = 0;
+var mode = 0, warning;
 $(document).ready(function(){
     $('#favbox').bind("input",getFavs);
     $('#history').click(function(){
@@ -11,6 +11,18 @@ $(document).ready(function(){
         };
         getFavs();
     });
+    $('#warning').click(function(){$(this).fadeOut();});
+    $('.disclaimer').click(function(){
+        $('.disclaimer').fadeOut(function(){
+            $('body').css("overflow","auto");
+            $('.overview').fadeIn();
+            $('#numincomplete').text("(" + $('.false').length + ")");
+            $('#numcomplete').text("(" + $('.true').length + ")");
+            $('#percentage').text(Math.floor(($('.true').length/($('.true').length+$('.false').length))*100));
+        });
+    });
+    $('#hideComplete').click(function(){$('.true').slideToggle();});
+    $('#hideIncomplete').click(function(){$('.false').slideToggle();});
 });
 
 var history = [];
@@ -25,22 +37,22 @@ function getFavs(){
                 if($.inArray(data.headword,history)==-1){
                     history.push(data.headword);
                 }
-                    var len,op;
-                    if (mode == 0){
-                        len = history.length;
-                        op = "/";
-                    } else {
-                        len = data.global;
-                        op = ":";
-                    }
-                    console.log(len);
-                    $('#history').text(len + " " + op + " " + data.count);
-                    $('#history').css('padding-right',(data.count-len)+"px");
-                    $('#history').css('padding-left', len+"px");
-                    $('#history').css('border-left','1px dotted #555');
-                    $('#history').css('border-right','1px dotted #555');
-                    $('#verbosehistory').html('<a class="hist" href="#">'+history.join('</a><a class="hist" href="#">')+'</a>');
+                    $('#history').text(history.length + " / " + data.count);
+                    $('#history').css({
+                        'padding-right':(data.count-history.length)+"px",
+                        'padding-left': history.length+"px",
+                    });
+                    $('.bar').css({
+                        'border-left':'1px dotted #555',
+                        'border-right':'1px dotted #555'
+                    });
+                    $('#globalhistory').text(data.global + " / " + data.count);
+                    $('#globalhistory').css({
+                        'padding-right':(data.count-data.global)+"px",
+                        'padding-left': data.global+"px",
+                    });
 
+                    $('#verbosehistory').html('<a class="hist" href="#">'+history.join('</a><a class="hist" href="#">')+'</a>');
                     $("body").append("<audio autoplay><source src=\"sfx/"+data.headword+".wav\" type=\"audio/wav\"></audio>");
 
                     if(data.newentry){
@@ -58,7 +70,10 @@ function getFavs(){
                 // sit tight
             }
             if(data.warning){
-                $("#warning").html(data.warning);
+                if (data.warning != warning){
+                    warning = data.warning;
+                    $("#warning").html(data.warning + '<span id="warnclose">click to dismiss</span>').fadeIn();
+                }
             } else {
                 $("#warning").html();
             }

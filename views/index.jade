@@ -5,7 +5,9 @@ block content
       a(href="history") history
     li
       a(href="progress") progress
-  a#history(href="#") type a word into the textbox ('apple')
+  div.bars
+    span.bar#history(title="local progress") type a word into the textbox ('apple')
+    span.bar#globalhistory(title="global progress")
   div#favs
     span My favourite 
     input(type="textarea",autofocus,autocomplete="off",maxlength="77")#favbox 

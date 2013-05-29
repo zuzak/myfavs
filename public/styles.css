@@ -32,10 +32,12 @@ h1 {
 #is {
     display:inline-block;
 }
-#history {
-    color:#555;
+.bars {
     float:right;
-    display:inline-block;
+}
+.bar {
+    color:#555;
+    display:block;
     font-size:100%;
 }
 #response {
@@ -52,6 +54,8 @@ h1 {
 #verbosehistory {
     color:#555;
     font-size:60%;
+    clear:right;
+    display:block;
 }
 #verbosehistory a, #verbosehistory span {
     padding:5px;
@@ -107,7 +111,7 @@ div#verboseprogress span.null {
     float:right;
 } 
 #progcontainer {
-    width:400px;
+    width:500px;
     margin:auto;
 }
 li {
@@ -122,7 +126,59 @@ div#verboseprogress span:hover {
 #warning {
     color:#EB8787;
     text-align:center;
-    display:block;
+    display:none;
     clear:both;
     margin-top:2em;
+}
+#warnclose {
+    display:block;
+    color:#666;
+    font-size:70%;
+}
+.leftovers{
+    color:#ccc;
+}
+.overview {
+    margin-left:100px;
+    margin-right:100px;
+    margin-top:50px;
+    margin-bottom:50px;
+    -moz-columns:200px;
+    -webkit-columns:200px;
+    columns:200px;
+    display:none;
+    clear:both;
+}
+.overview span {
+    color:black;
+    border:1px solid #222;
+    display:block;
+    width:200px;
+    padding:5px;
+    overflow:hidden;
+    height:1em;
+    margin-top:5px;
+    background-color:#bbb;
+    text-overflow:ellipsis;
+}
+.overview .true {
+    color:#444;
+}
+.overview .false {
+    color:#bbb;
+    background-color:#444;
+}
+.overview .true:hover { background-color:green; }
+.overview .false:hover { background-color:red; }
+
+.overview span:hover { overflow:visible; }
+.disclaimer {
+    text-align:center;
+    height:100%;
+    background-color:black;
+    padding:20%;
+    height:110%;
+}
+.nav {
+    margin:20px;
 }

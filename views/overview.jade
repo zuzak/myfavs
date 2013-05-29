@@ -1,0 +1,22 @@
+extends skeleton
+block append head 
+  style.
+    body,html{overflow:hidden;height:100%;width:100%;margin:0;padding:0}
+    body{max-height:100%;}
+block content
+  div.disclaimer
+    h1 Spoilers ahead!
+    p Click to continue if you are sure you wish to do so.
+  ul.nav
+    li
+      a#hideComplete(href="#") toggle complete <span id="numcomplete"></span>
+    li
+      a#hideIncomplete(href="#") toggle incomplete <span id="numincomplete"></span>
+    li
+      span#percentage
+      span %
+  div.overview
+    each val,key in data;
+      - var foo = "";
+      - if(val.count){foo = "(" +  val.count + ")"}
+      span(class="#{val.success}") #{val.headword} #{foo}
